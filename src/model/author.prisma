@@ -1,0 +1,15 @@
+model Author {
+  id         Int     @id @default(autoincrement())
+  bio        String?
+  firstName  String
+  middleName String?
+  lastName   String
+  book       Book[]
+}
+
+model Book {
+  id      Int   @id @default(autoincrement())
+  authorId  Int
+  author      Author  @relation(fields: [authorId], references: [id])
+}
+
