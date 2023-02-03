@@ -1,23 +1,41 @@
-import { PrismaClient } from "@prisma/client";
+import { Book, PrismaClient } from "@prisma/client";
+import { IBook } from "../types/book.interface";
 
 
 export const prisma = new PrismaClient()
 
-export async function createBook(): Promise<void> {
+export async function createBook(body: IBook ): Promise<Book | null> {
     const book = await prisma.book.create({
-        data:{
-            name: 'Test2', 
-            description: 'This is a demo book', 
-            authorId: 1
-        }
+        data: body , include: {author: true}
     });
-
-    console.log(book) ;
+    prisma.$disconnect();
+    return book;
 }
 
-export async function findBook(): Promise<object[]>
+export async function findAllBooks(): Promise<object[]>
 {
     const books = await prisma.book.findMany({include: {author: true}})
+    prisma.$disconnect();
+    return books;
+}
 
+export async function searchBooks(query:{name?:string, authorName?:string,}):Promise<Book[]>{
+    console.log(query);
+    const books = await prisma.book.findMany({
+        where:{
+            name: {
+                contains: query.name,
+            }, 
+            author:{
+             OR:[
+                {firstName:{ contains: query.authorName, mode: 'insensitive' } }, 
+                {middleName:{ contains:query.authorName, mode:'insensitive'  }}, 
+                {lastName:{contains: query.authorName, mode:'insensitive'} },
+             ]
+            }
+        },
+        include: {author: true}
+    })
+    prisma.$disconnect()
     return books;
 }
