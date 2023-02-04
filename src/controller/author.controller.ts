@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { createAuthor, editAuthor, findAllAuthors } from "../service/author.service";
+import { createAuthor, editAuthor, findAllAuthors, deleteOneAuthor } from "../service/author.service";
 
 export async function create(req: Request, res: Response, next: NextFunction) {
     await createAuthor(req.body)
@@ -24,4 +24,10 @@ export async function edit(req: Request, res: Response, next: NextFunction)
         success: true, 
         data: await editAuthor(req.params.id, req.body)
     })
+}
+
+export async function deleteOne(req:Request, res: Response, next: NextFunction)
+{
+    await deleteOneAuthor(parseInt(req.params.id, 10))
+    return res.status(204).send()
 }

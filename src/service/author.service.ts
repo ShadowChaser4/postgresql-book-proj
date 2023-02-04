@@ -30,3 +30,12 @@ export async function editAuthor(id: string, body: {firstName?:string,middleName
 }
 
 
+export async function deleteOneAuthor(id:number){
+    await prisma.author.delete({
+        where: {
+            id: id
+        }
+    })
+    prisma.$disconnect();
+}
+
