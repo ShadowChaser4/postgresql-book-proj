@@ -16,3 +16,17 @@ export async function findAllAuthors (): Promise<object[]> {
     prisma.$disconnect(); 
     return authors;
 }
+
+export async function editAuthor(id: string, body: {firstName?:string,middleName?:string, lastName?:string, bio? :string }) {
+    const updatedAuthor = await prisma.author.update({
+        where: {
+         id: parseInt(id, 10)
+        }, 
+        data: body
+    })
+    prisma.$disconnect();
+
+    return updatedAuthor;
+}
+
+
