@@ -1,4 +1,8 @@
+import { IAuthor } from "./author.interface";
+
 export interface IBook { name: string;
                          description? :string;
-                         authorId: number;
+                         author: {
+                            [key:string]:IAuthor
+                         }
                         }

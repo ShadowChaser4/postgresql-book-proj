@@ -3,8 +3,7 @@ model Book {
   id          Int     @id @default(autoincrement())
   name        String
   description String?
-  authorId    Int
-  author      Author  @relation(fields: [authorId], references: [id])
+  author       Author[]
 }
 
 model Author {
