@@ -18,13 +18,14 @@ export async function findAllAuthors (): Promise<object[]> {
 }
 
 
-export async function searchAuthor ( body:{query?:string}):Promise<object[]>{
+export async function searchAuthor ( query:{query?:string}):Promise<object[]>{
+
     const author = await prisma.author.findMany({
         where: {
             OR:[
-                { firstName: {contains: body.query} }, 
-                { middleName: {contains: body.query} },
-                { lastName: {contains: body.query} },
+                { firstName: {contains: query.query, mode:'insensitive'} }, 
+                { middleName: {contains: query.query, mode:'insensitive'} },
+                { lastName: {contains: query.query, mode:'insensitive' } },
             ]
         }
     })
