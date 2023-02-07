@@ -48,3 +48,10 @@ export async function searchBooks(query:{name?:string, authorName?:string,}):Pro
     prisma.$disconnect()
     return books;
 }
+
+export async function  deleteBook(id:number){
+    await prisma.book.delete({where:{
+        id: id ,
+    }})
+    prisma.$disconnect()
+}
