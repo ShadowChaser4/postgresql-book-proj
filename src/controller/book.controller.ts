@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { createBook, findAllBooks, searchBooks } from "../service/book.service";
+import { createBook, deleteBook, findAllBooks, searchBooks } from "../service/book.service";
 
 export async function create(req: Request, res: Response, next: NextFunction)
 {
@@ -27,4 +27,9 @@ export async function search (req: Request, res: Response, next: NextFunction) {
         success: true, 
         data: await searchBooks(query)
     })
+}
+
+export async function deleteBooks(req: Request , res: Response , next: NextFunction) {
+    await deleteBook( parseInt( req.params.id) )
+    return res.sendStatus(204)
 }

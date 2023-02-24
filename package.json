@@ -4,7 +4,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "dev": "yarn prismix && nodemon ./src/index.ts",
-    "start": "node ./dist/index.ts",
+    "start": "npx prisma migrate dev && nodemon ./dist/index.js",
     "prismix": "npx prismix && prisma format"
   },
   "devDependencies": {
